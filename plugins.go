@@ -134,6 +134,11 @@ func NewPlugins() *InOutPlugins {
 		plugins.registerPlugin(NewHTTPInput, options)
 	}
 
+	// support zmq
+	for _, options := range Settings.OutputZmq {
+		plugins.registerPlugin(NewZmqOutput, options)
+	}
+
 	// If we explicitly set Host header http output should not rewrite it
 	// Fix: https://github.com/buger/gor/issues/174
 	for _, header := range Settings.ModifierConfig.Headers {

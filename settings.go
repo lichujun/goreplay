@@ -69,6 +69,9 @@ type AppSettings struct {
 	InputKafkaConfig  InputKafkaConfig
 	OutputKafkaConfig OutputKafkaConfig
 	KafkaTLSConfig    KafkaTLSConfig
+
+	OutputZmq       MultiOption `json:"output-zmq"`
+	OutputZmqConfig ZmqOutputConfig
 }
 
 // Settings holds Gor configuration
@@ -120,6 +123,9 @@ func init() {
 	flag.Var(&Settings.OutputFileConfig.SizeLimit, "output-file-size-limit", "Size of each chunk. Default: 32mb")
 	flag.IntVar(&Settings.OutputFileConfig.QueueLimit, "output-file-queue-limit", 256, "The length of the chunk queue. Default: 256")
 	flag.Var(&Settings.OutputFileConfig.OutputFileMaxSize, "output-file-max-size-limit", "Max size of output file, Default: 1TB")
+
+	// zmq
+	flag.Var(&Settings.OutputZmq, "output-zmq", "Write requests to zmq: \n\t gor --input-raw :80 --output-zmq 127.0.0.1:8080")
 
 	flag.StringVar(&Settings.OutputFileConfig.BufferPath, "output-file-buffer", "/tmp", "The path for temporary storing current buffer: \n\tgor --input-raw :80 --output-file s3://mybucket/logs/%Y-%m-%d.gz --output-file-buffer /mnt/logs")
 
